@@ -1,3 +1,23 @@
+<?php
+include 'koneksi.php';
+
+if (isset($_POST['register'])) {
+    $username = $_POST['username'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Enkripsi password
+    $email = $_POST['email'];
+    $namalengkap = $_POST['namalengkap'];
+
+    $query = "INSERT INTO tb_login (username, password, email, nama_lengkap) VALUES ('$username', '$password', '$email', '$namalengkap')";
+    $result = mysqli_query($conn, $query);
+
+    if ($result) {
+        echo "Registrasi berhasil. <a href='login.html'>Login di sini</a>";
+    } else {
+        echo "Registrasi gagal: " . mysqli_error($conn);
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
