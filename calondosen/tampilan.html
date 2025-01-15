@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">MyWeb</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="video.html">Video</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="question.html">Pertanyaan</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <!-- Video Section -->
+        <section id="video">
+            <h2>Video</h2>
+            <div class="mb-3">
+                <label for="genreSelect" class="form-label">Pilih Genre/Mata Pelajaran:</label>
+                <select class="form-select" id="genreSelect" onchange="filterVideos()">
+                    <option value="all">Semua</option>
+                    <option value="general">Umum</option>
+                    <option value="math">Matematika</option>
+                    <option value="indonesian">Bahasa Indonesia</option>
+                    <option value="english">Bahasa Inggris</option>
+                    <option value="civics">PPKn</option>
+                    <option value="science">IPA</option>
+                    <option value="social">IPS</option>
+                    <option value="it">Teknik Informatika</option>
+                </select>
+            </div>
+
+            <div class="row" id="videoList">
+                <div class="col-md-4 video-item" data-genre="math">
+                    <div class="card">
+                        <iframe class="card-img-top" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Matematika Video 1" frameborder="0" allowfullscreen></iframe>
+                        <div class="card-body">
+                            <h5 class="card-title">Matematika Video 1</h5>
+                            <p class="card-text">Deskripsi singkat tentang matematika.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 video-item" data-genre="science">
+                    <div class="card">
+                        <iframe class="card-img-top" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="IPA Video 1" frameborder="0" allowfullscreen></iframe>
+                        <div class="card-body">
+                            <h5 class="card-title">IPA Video 1</h5>
+                            <p class="card-text">Deskripsi singkat tentang IPA.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 video-item" data-genre="english">
+                    <div class="card">
+                        <iframe class="card-img-top" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Bahasa Inggris Video 1" frameborder="0" allowfullscreen></iframe>
+                        <div class="card-body">
+                            <h5 class="card-title">Bahasa Inggris Video 1</h5>
+                            <p class="card-text">Deskripsi singkat tentang Bahasa Inggris.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more video items as needed -->
+            </div>
+        </section>
+    </div>
+
+    <!-- JavaScript for Filtering -->
+    <script>
+        function filterVideos() {
+            const genre = document.getElementById('genreSelect').value;
+            const videos = document.querySelectorAll('.video-item');
+
+            videos.forEach(video => {
+                if (genre === 'all' || video.dataset.genre === genre) {
+                    video.style.display = 'block';
+                } else {
+                    video.style.display = 'none';
+                }
+            });
+        }
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
