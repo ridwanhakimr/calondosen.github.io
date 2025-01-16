@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Bimbingan Belajar</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        /* Sidebar Styling */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100vh;
+            background-color: #343a40;
+            color: white;
+            padding-top: 20px;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            display: block;
+            font-size: 16px;
+        }
+        .sidebar a:hover {
+            background-color: #495057;
+        }
+        .sidebar .dropdown-menu {
+            background-color: #495057;
+        }
+        /* Main Content */
+        .content {
+            margin-left: 250px;
+            padding-top: 30px;
+        }
+
+        /* Card styling */
+        .card {
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+        .card-body {
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div class="container-fluid">
+            <div class="row flex-nowrap">
+                <div class="col-auto col-md-3 col-xl-2 px-sm-3 px-0 bg-light  shadow bg-white rounded">
+                    <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-3  min-vh-100">
+                        <div class="row ">
+                            <div class="col-md-4">
+                                <img src="./asset/image/Logo.png" width="50">
+    
+                            </div>
+                            <div class="col-md-8 mt-2">
+                                <a href="#"
+                                    class="d-flex align-items-center pb-3 mb-md-0 me-md-auto  text-decoration-none text-black">
+                                    <span class="fs-5 d-none d-sm-inline">Calon Dosen</span>
+                                </a>
+                            </div>
+                        </div>
+    
+                        <ul class="nav nav-pills flex-column mt-5 mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                            id="menu">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link align-middle px-0 text-black">
+                                    <i class="fs-3 bi-house"></i> <span class="ms-3 d-none d-sm-inline">Home</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#dropdownMenu"
+                                    aria-expanded="false" aria-controls="dropdownMenu">
+                                    <i class=" fas fa-chalkboard-teacher me-2"></i> Materi <i class="mx-4 fas fa-caret-down"></i>
+                                </a>
+                                <div class="collapse" id="dropdownMenu">
+                                    <ul class="nav flex-column ms-3">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Materi 1</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Materi 2</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Materi 3</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Materi 4</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Materi 5</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-white" href="#">Materi 6</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link align-middle px-0 text-black">
+                                    <i class="fs-3  bi-image"></i> <span class="ms-3 d-none d-sm-inline">Foto</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link align-middle px-0 text-black">
+                                    <i class="fs-3 bi-person"></i> <span class="ms-3 d-none d-sm-inline">Account</span>
+                                </a>
+                            </li>
+    
+                        </ul>
+                        <hr>
+                        <div class="dropdown pb-4">
+                            <ul class="nav nav-pills " id="menu">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link align-middle px-0 text-black">
+                                        <i class="fs-3 bi-box-arrow-left"></i> <span class="ms-3 d-none d-sm-inline">Logout</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- content area -->
+                <div class="col py-3">
+                    <nav class="navbar navbar-expand-lg bg-body-tertiary mb-5">
+                        <div class="container-fluid">
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                                <i class='bx bx-menu fs-2 me-4 '></i>
+                                <div class="input-group  w-50 ">
+                                    <input type="text" class="form-control " placeholder="Ask a question..." aria-label="Ask a question" />
+                                    <button class="btn btn-outline-secondary" type="button"><i class='bx bx-search fs-4'></i></button>
+                                  </div>
+                            </div>
+                            <div class="account-name mx-4" style="line-height: 10px;">
+                                <p><strong>Zahra Ramanayshiila</strong></p>
+                                <span style="color: grey;">Admin</span>
+                            </div>
+                            <img src="./asset/image/profile.jpg"
+                                style="width: 50px; border-radius: 100%; line-height: 50px;" alt="">
+                        </div>
+                    </nav>
+    
+                    <!-- insight Section -->
+                    <section class="container my-5">
+                        <h2 class="text-center mb-4">Insight</h2>
+                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">Mathematics</h5>
+                                        <p class="card-text">Explore math questions and answers.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">Science</h5>
+                                        <p class="card-text">Dive into science-related topics.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">History</h5>
+                                        <p class="card-text">Discover historical insights.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">My Dashboard</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Profile</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+           
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
