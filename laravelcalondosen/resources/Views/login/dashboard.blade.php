@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #121212;
+            /* Dark background for body */
+            color: #e0e0e0;
+            /* Light text color for dark mode */
+        }
+
+        .navbar {
+            background-color: #1f1f1f;
+            /* Dark background for navbar */
+        }
+
+        .navbar a {
+            color: #d1d1d1;
+            /* Light text color for navbar links */
+        }
+
+        .navbar a:hover {
+            color: #4e9fd1;
+            /* Blue accent on hover */
+        }
+
+        .card {
+            background-color: #2c2c2c;
+            /* Dark card background */
+            border: none;
+            /* Remove border for cards */
+            color: #e0e0e0;
+            /* Light text inside cards */
+            border-radius: 10px;
+        }
+
+        .card-title {
+            color: #ffffff;
+            /* White title for the card */
+        }
+
+        .card-img-top {
+            border-bottom: 2px solid #444444;
+            /* Dark border below video */
+        }
+
+        .bg-primary {
+            background: linear-gradient(45deg, #007bff, #c278ff);
+        }
+
+        .footer {
+            background-color: #1f1f1f;
+            /* Dark background for footer */
+            color: #e0e0e0;
+            /* Light text color for footer */
+        }
+
+        .footer a {
+            color: #e0e0e0;
+        }
+
+        .footer a:hover {
+            color: #4e9fd1;
+            /* Blue accent on hover */
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .form-select {
+            background-color: rgba(255, 255, 255, 0.2);
+            /* Slightly dark inputs */
+            color: #f0f0f0;
+            /* Light text inside inputs */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            /* Light border */
+            border-radius: 5px;
+        }
+
+        .form-select option {
+            background-color: rgba(255, 255, 255, 0.2);
+            /* Slightly dark inputs */
+            color: #f0f0f0;
+            /* Light text inside inputs */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            /* Light border */
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container d-flex justify-content-between align-items-center">
+            <!-- Logo and Text -->
+            <div class="d-flex align-items-center">
+                <img src="https://github.com/ridwanhakimr/gambar/blob/main/image/Logo.png?raw=true"
+                    alt="LearningX Academy Logo" height="50" width="50" class="me-2" />
+                <div>
+                    <h1 class="h5 fw-bold mb-0">Calon Dosen</h1>
+                    <p class="small text-secondary mb-0">Belajar bersama Calon Dosen.</p>
+                </div>
+            </div>
+
+            <!-- Navbar Toggler -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar Menu -->
+            <nav class="d-flex align-items-center gap-3">
+                <a href="#" class="text-primary text-decoration-none">Pertanyaan</a>
+                <a href="#" class="text-primary text-decoration-none">Video</a>
+                <div class="d-flex align-items-center">
+                    <img src="https://storage.googleapis.com/a1aa/image/vudA2588jCKiJh7nsKVox2N8cNpa7Mqff2M0NvZfnofyRtuPB.jpg"
+                        alt="User Avatar" class="rounded-circle" height="40" width="40" />
+                    <li class="nav dropdown">
+                        <a class="nav-link" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <p class="fw-bold mb-0">{{ session('user')->nama_lengkap }}</p>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                          <li><a class="dropdown-item text-danger" href="{{ url('/logout') }}">logout</a></li>
+                        </ul>
+                      </li>
+                </div>
+            </nav>
+        </div>
+    </nav>
+    <div class="pt-5"></div>
+    <div class="pt-5"></div>
+
+    <!-- Main Content -->
+    <main class="container text-center mt-4">
+        <div class="bg-primary text-white py-5 rounded">
+            <h2 class="h4 fw-bold">VIDEO PEMBELAJARAN</h2>
+            <p class="mb-0">Temukan mata pelajaran yang ingin kamu pelajari</p>
+        </div>
+
+        <!-- Video Section -->
+        <section id="video" class="mt-4">
+            <form action="{{ route('videos.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <label>Judul Video:</label><br>
+                <input type="text" name="title" required><br><br>
+
+                <label>Deskripsi Video:</label><br>
+                <textarea name="description" required></textarea><br><br>
+
+                <label>Kategori:</label><br>
+                <select name="category" required>
+                    <option value="Matematika">Matematika</option>
+                    <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+                    <option value="Bahasa Inggris">Bahasa Inggris</option>
+                    <option value="PPKN">PPKN</option>
+                    <option value="IPA">IPA</option>
+                    <option value="IPS">IPS</option>
+                    <option value="Teknik Informatika">Teknik Informatika</option>
+                    <option value="Lainnya">Lainnya</option>
+                </select><br><br>
+
+                <label>Upload Video:</label><br>
+                <input type="file" name="video" accept="video/*" required><br><br>
+
+                <button type="submit">Unggah Video</button>
+            </form>
+
+            <h2>Video Pembelajaran</h2>
+            <form method="GET" action="{{ route('dashboard') }}">
+                <label for="category">Filter Kategori:</label>
+                <select name="category" id="category" onchange="this.form.submit()">
+                    @foreach ($categories as $cat)
+                        <option value="{{ $cat }}" {{ $cat === $category ? 'selected' : '' }}>
+                            {{ $cat }}
+                        </option>
+                    @endforeach
+                </select>
+            </form>
+            <div>
+                @forelse ($videos as $video)
+                    <div style="margin-bottom: 20px;">
+                        <h3>{{ $video->title }}</h3>
+                        <p>{{ $video->description }}</p>
+                        <p>Kategori: {{ $video->category }}</p>
+                        <p>Pengirim: {{ $video->user->nama_lengkap }}</p>
+                        <video width="300" controls>
+                            <source src="{{ asset('storage/' . $video->video_path) }}" type="video/mp4">
+                        </video><br>
+                        <a href="{{ route('videos.show', $video->id) }}">Tampilkan Video Besar</a><br>
+                        @if (session('user')->id_user == $video->user_id)
+                            <form action="{{ route('videos.destroy', $video->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit">Hapus</button>
+                            </form>
+                        @endif
+                    </div>
+                @empty
+                    <p>Tidak ada video untuk kategori ini.</p>
+                @endforelse
+            </div>
+            <!-- <div class="pilih d-flex align-items-center mb-3">
+                <label for="genreSelect" class="form-label me-3 text-light"><strong>Pilih Genre/Mata
+                        Pelajaran:</strong></label>
+                <select class="form-select" id="genreSelect"
+                    style="background-color: #333333; color: #e0e0e0; border-color: #555555;">
+                    <option value="all" style="background-color: #333333; color: #e0e0e0;">Semua</option>
+                    <option value="general" style="background-color: #333333; color: #e0e0e0;">Umum</option>
+                    <option value="math" style="background-color: #333333; color: #e0e0e0;">Matematika</option>
+                    <option value="indonesian" style="background-color: #333333; color: #e0e0e0;">Bahasa Indonesia
+                    </option>
+                    <option value="english" style="background-color: #333333; color: #e0e0e0;">Bahasa Inggris</option>
+                    <option value="civics" style="background-color: #333333; color: #e0e0e0;">PPKn</option>
+                    <option value="science" style="background-color: #333333; color: #e0e0e0;">IPA</option>
+                    <option value="social" style="background-color: #333333; color: #e0e0e0;">IPS</option>
+                    <option value="it" style="background-color: #333333; color: #e0e0e0;">Teknik Informatika</option>
+                </select>
+            </div> -->
+
+            <!-- video -->
+            <!-- <div class="row g-4"> g-4 adds space between the cards -->
+                <!-- <div class="col-md-4">
+                    <div class="card">
+                        <iframe class="card-img-top" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video 1"
+                            frameborder="0" allowfullscreen></iframe>
+                        <div class="card-body">
+                            <h5 class="card-title">Video 1</h5>
+                            <p class="card-text">Deskripsi singkat video 1.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <iframe class="card-img-top" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video 1"
+                            frameborder="0" allowfullscreen></iframe>
+                        <div class="card-body">
+                            <h5 class="card-title">Video 2</h5>
+                            <p class="card-text">Deskripsi singkat video 1.</p>
+                        </div>
+                    </div>
+                </div> -->
+            
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-center py-4 mt-5">
+        <p class="mb-0 text-light">© 2025 Calon Dosen. Semua Hak Dilindungi.</p>
+        <div class="mt-2">
+            <a href="#" class="text-light me-2"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-light me-2"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
