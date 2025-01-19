@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $video->title }}</title>
+    <title>Edit Video</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
@@ -144,12 +144,41 @@
     <div class="pt-5"></div>
 
     <!-- Main Content -->
-    <h1>{{ $video->title }}</h1>
-    <p>{{ $video->description }}</p>
-    <video width="800" controls>
-        <source src="{{ asset('storage/' . $video->video_path) }}" type="video/mp4">
-    </video>
-    <br>
+    @if ($errors->any())
+        <div style="color: red;">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <form action="{{ route('videos.update', $video->id) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+
+        <label for="title">Judul Video:</label><br>
+        <input type="text" id="title" name="title" value="{{ $video->title }}" required><br><br>
+
+        <label for="description">Deskripsi Video:</label><br>
+        <textarea id="description" name="description" required>{{ $video->description }}</textarea><br><br>
+
+        <label for="category">Kategori:</label><br>
+        <select id="category" name="category" required>
+            @foreach ($categories as $cat)
+                <option value="{{ $cat }}" {{ $video->category === $cat ? 'selected' : '' }}>
+                    {{ $cat }}
+                </option>
+            @endforeach
+        </select><br><br>
+
+        <label for="video">Unggah Video Baru (Opsional):</label><br>
+        <input type="file" id="video" name="video" accept="video/*"><br><br>
+
+        <button type="submit">Simpan Perubahan</button>
+    </form>
+
     <a href="{{ route('dashboard') }}">Kembali ke Dashboard</a>
 
     <!-- Footer -->

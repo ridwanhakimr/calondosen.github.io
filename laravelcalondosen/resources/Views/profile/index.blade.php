@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $video->title }}</title>
+    <title>PROFILE</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
@@ -123,7 +123,7 @@
 
             <!-- Navbar Menu -->
             <nav class="d-flex align-items-center gap-3">
-                <a href="#" class="text-primary text-decoration-none">Video</a>
+                <a href="{{ url ('dashboard')}}" class="text-primary text-decoration-none">Video</a>
                 <a href="{{ url ('questions')}}" class="text-primary text-decoration-none">Pertanyaan</a>
                 <div class="d-flex align-items-center">
                     <img src="https://storage.googleapis.com/a1aa/image/vudA2588jCKiJh7nsKVox2N8cNpa7Mqff2M0NvZfnofyRtuPB.jpg"
@@ -133,7 +133,8 @@
                             <p class="fw-bold mb-0">{{ session('user')->nama_lengkap }}</p>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                          <li><a class="dropdown-item text-danger" href="{{ url('/logout') }}">logout</a></li>
+                            <li><a class="dropdown-item text-primary" href="{{ url('/profile') }}">Profile</a></li>
+                            <li><a class="dropdown-item text-danger" href="{{ url('/logout') }}">logout</a></li>
                         </ul>
                       </li>
                 </div>
@@ -144,13 +145,73 @@
     <div class="pt-5"></div>
 
     <!-- Main Content -->
-    <h1>{{ $video->title }}</h1>
-    <p>{{ $video->description }}</p>
-    <video width="800" controls>
-        <source src="{{ asset('storage/' . $video->video_path) }}" type="video/mp4">
-    </video>
-    <br>
-    <a href="{{ route('dashboard') }}">Kembali ke Dashboard</a>
+    @if (session('success'))
+        <div style="color: green;">{{ session('success') }}</div>
+    @endif
+
+    <!-- Informasi Akun -->
+    <form action="{{ route('profile.update') }}" method="POST">
+        @csrf
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" value="{{ $user->username }}" required><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" value="{{ $user->email }}" required><br><br>
+
+        <label for="password">Password (Opsional - untuk mengganti):</label><br>
+        <input type="password" id="password" name="password"><br><br>
+
+        <label for="nama_lengkap">Nama Lengkap:</label><br>
+        <input type="text" id="nama_lengkap" name="nama_lengkap" value="{{ $user->nama_lengkap }}" required><br><br>
+
+        <button type="submit">Perbarui Profil</button>
+    </form>
+
+    <hr>
+
+    <!-- Video yang Diunggah -->
+    <h2>Video Saya</h2>
+    <a href="{{ route('videos.create') }}">
+        <button>Tambah Video</button>
+    </a>
+    @foreach ($videos as $video)
+        <div>
+            <h3>{{ $video->title }}</h3>
+            <p>{{ $video->description }}</p>
+            <p>Kategori: {{ $video->category }}</p>
+            <video width="300" controls>
+                <source src="{{ asset('storage/' . $video->video_path) }}" type="video/mp4">
+            </video><br>
+            <a href="{{ route('videos.show', $video->id) }}">Tampilkan Video Besar</a><br>
+            <a href="{{ route('videos.edit', $video->id) }}">Edit</a>
+            <form action="{{ route('videos.destroy', $video->id) }}" method="POST" style="display:inline;">
+                @csrf
+                @method('DELETE')
+                <button type="submit">Hapus</button>
+            </form>
+        </div>
+    @endforeach
+
+    <hr>
+
+    <!-- Pertanyaan yang Diunggah -->
+    <h2>Pertanyaan Saya</h2>
+        <a href="{{ route('questions.create') }}">
+            <button>Tambah Pertanyaan</button>
+        </a>
+    @foreach ($questions as $question)
+        <div>
+            <h3>{{ $question->title }}</h3>
+            <p>Kategori: {{ $question->category }}</p>
+            <a href="{{ route('questions.show', $question->id) }}">Lihat Jawaban</a>
+            <a href="{{ route('questions.edit', $question->id) }}">Edit</a>
+            <form action="{{ route('questions.destroy', $question->id) }}" method="POST" style="display:inline;">
+                @csrf
+                @method('DELETE')
+                <button type="submit">Hapus</button>
+            </form>
+        </div>
+    @endforeach
 
     <!-- Footer -->
     <footer class="bg-dark text-center py-4 mt-5">

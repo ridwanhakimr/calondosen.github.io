@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $video->title }}</title>
+    <title>Edit Pertanyaan</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
@@ -123,8 +123,8 @@
 
             <!-- Navbar Menu -->
             <nav class="d-flex align-items-center gap-3">
-                <a href="#" class="text-primary text-decoration-none">Video</a>
-                <a href="{{ url ('questions')}}" class="text-primary text-decoration-none">Pertanyaan</a>
+                <a href="{{ url ('dashboard')}}" class="text-primary text-decoration-none">Video</a>
+                <a href="#" class="text-primary text-decoration-none">Pertanyaan</a>
                 <div class="d-flex align-items-center">
                     <img src="https://storage.googleapis.com/a1aa/image/vudA2588jCKiJh7nsKVox2N8cNpa7Mqff2M0NvZfnofyRtuPB.jpg"
                         alt="User Avatar" class="rounded-circle" height="40" width="40" />
@@ -133,7 +133,8 @@
                             <p class="fw-bold mb-0">{{ session('user')->nama_lengkap }}</p>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                          <li><a class="dropdown-item text-danger" href="{{ url('/logout') }}">logout</a></li>
+                            <li><a class="dropdown-item text-primary" href="{{ url('/profile') }}">Profile</a></li>
+                            <li><a class="dropdown-item text-danger" href="{{ url('/logout') }}">logout</a></li>
                         </ul>
                       </li>
                 </div>
@@ -144,13 +145,29 @@
     <div class="pt-5"></div>
 
     <!-- Main Content -->
-    <h1>{{ $video->title }}</h1>
-    <p>{{ $video->description }}</p>
-    <video width="800" controls>
-        <source src="{{ asset('storage/' . $video->video_path) }}" type="video/mp4">
-    </video>
-    <br>
-    <a href="{{ route('dashboard') }}">Kembali ke Dashboard</a>
+    <h1>Edit Pertanyaan</h1>
+
+    <form action="{{ route('questions.update', $question->id) }}" method="POST">
+        @csrf
+        @method('PUT')
+        <label for="title">Judul:</label><br>
+        <input type="text" id="title" name="title" value="{{ $question->title }}" required><br><br>
+
+        <label for="content">Isi Pertanyaan:</label><br>
+        <textarea id="content" name="content" required>{{ $question->content }}</textarea><br><br>
+
+        <label for="category">Kategori:</label><br>
+        <select id="category" name="category" required>
+            @foreach ($categories as $category)
+                <option value="{{ $category }}" {{ $question->category === $category ? 'selected' : '' }}>
+                    {{ $category }}
+                </option>
+            @endforeach
+        </select><br><br>
+
+        <button type="submit">Simpan</button>
+    </form>
+
 
     <!-- Footer -->
     <footer class="bg-dark text-center py-4 mt-5">

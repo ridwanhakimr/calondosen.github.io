@@ -53,7 +53,15 @@ class VideoController extends Controller
             'user_id' => session('user')->id_user,
         ]);
 
-        return redirect()->back()->with('success', 'Video berhasil diunggah!');
+        return redirect()->route('dashboard')->with('success', 'Video berhasil ditambahkan!');
+    }
+
+    public function create()
+    {
+        // Daftar kategori untuk form
+        $categories = ['Matematika', 'Bahasa Indonesia', 'Bahasa Inggris', 'PPKN', 'IPA', 'IPS', 'Teknik Informatika', 'Lainnya'];
+
+        return view('login.createvid', compact('categories'));
     }
 
     public function destroy($id)
@@ -75,4 +83,49 @@ class VideoController extends Controller
         $video = Video::findOrFail($id);
         return view('login.video', compact('video'));
     }
+
+    public function edit($id)
+    {
+        // Ambil data video berdasarkan ID
+        $video = Video::findOrFail($id);
+
+        // Daftar kategori
+        $categories = ['Semua', 'Matematika', 'Bahasa Indonesia', 'Bahasa Inggris', 'PPKN', 'IPA', 'IPS', 'Teknik Informatika', 'Lainnya'];
+
+        // Kirim data video ke form edit
+        return view('login.edit', compact('video', 'categories'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validasi input
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'category' => 'required',
+            'video' => 'nullable|mimes:mp4,avi,mov|max:20480', // Max 20MB
+        ]);
+
+        // Ambil data video
+        $video = Video::findOrFail($id);
+
+        // Update video jika file baru diunggah
+        if ($request->hasFile('video')) {
+            // Hapus file video lama
+            Storage::disk('public')->delete($video->video_path);
+
+            // Simpan file video baru
+            $path = $request->file('video')->store('videos', 'public');
+            $video->video_path = $path;
+        }
+
+        // Update data lainnya
+        $video->title = $request->title;
+        $video->description = $request->description;
+        $video->category = $request->category;
+        $video->save();
+
+        return redirect()->route('dashboard')->with('success', 'Video berhasil diperbarui!');
+    }
+
 }

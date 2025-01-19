@@ -123,8 +123,8 @@
 
             <!-- Navbar Menu -->
             <nav class="d-flex align-items-center gap-3">
-                <a href="#" class="text-primary text-decoration-none">Pertanyaan</a>
                 <a href="#" class="text-primary text-decoration-none">Video</a>
+                <a href="{{ url ('questions')}}" class="text-primary text-decoration-none">Pertanyaan</a>
                 <div class="d-flex align-items-center">
                     <img src="https://storage.googleapis.com/a1aa/image/vudA2588jCKiJh7nsKVox2N8cNpa7Mqff2M0NvZfnofyRtuPB.jpg"
                         alt="User Avatar" class="rounded-circle" height="40" width="40" />
@@ -133,7 +133,8 @@
                             <p class="fw-bold mb-0">{{ session('user')->nama_lengkap }}</p>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                          <li><a class="dropdown-item text-danger" href="{{ url('/logout') }}">logout</a></li>
+                            <li><a class="dropdown-item text-primary" href="{{ url('/profile') }}">Profile</a></li>
+                            <li><a class="dropdown-item text-danger" href="{{ url('/logout') }}">logout</a></li>
                         </ul>
                       </li>
                 </div>
@@ -152,31 +153,9 @@
 
         <!-- Video Section -->
         <section id="video" class="mt-4">
-            <form action="{{ route('videos.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <label>Judul Video:</label><br>
-                <input type="text" name="title" required><br><br>
-
-                <label>Deskripsi Video:</label><br>
-                <textarea name="description" required></textarea><br><br>
-
-                <label>Kategori:</label><br>
-                <select name="category" required>
-                    <option value="Matematika">Matematika</option>
-                    <option value="Bahasa Indonesia">Bahasa Indonesia</option>
-                    <option value="Bahasa Inggris">Bahasa Inggris</option>
-                    <option value="PPKN">PPKN</option>
-                    <option value="IPA">IPA</option>
-                    <option value="IPS">IPS</option>
-                    <option value="Teknik Informatika">Teknik Informatika</option>
-                    <option value="Lainnya">Lainnya</option>
-                </select><br><br>
-
-                <label>Upload Video:</label><br>
-                <input type="file" name="video" accept="video/*" required><br><br>
-
-                <button type="submit">Unggah Video</button>
-            </form>
+            <a href="{{ route('videos.create') }}">
+                <button>Tambah Video</button>
+            </a>
 
             <h2>Video Pembelajaran</h2>
             <form method="GET" action="{{ route('dashboard') }}">
@@ -201,6 +180,7 @@
                         </video><br>
                         <a href="{{ route('videos.show', $video->id) }}">Tampilkan Video Besar</a><br>
                         @if (session('user')->id_user == $video->user_id)
+                            <a href="{{ route('videos.edit', $video->id) }}">Edit</a>
                             <form action="{{ route('videos.destroy', $video->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
