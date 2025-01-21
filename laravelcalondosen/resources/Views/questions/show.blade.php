@@ -122,23 +122,32 @@
             </button>
 
             <!-- Navbar Menu -->
-            <nav class="d-flex align-items-center gap-3">
-                <a href="{{ url ('dashboard')}}" class="text-primary text-decoration-none">Video</a>
-                <a href="#" class="text-primary text-decoration-none">Pertanyaan</a>
-                <div class="d-flex align-items-center">
-                    <img src="https://storage.googleapis.com/a1aa/image/vudA2588jCKiJh7nsKVox2N8cNpa7Mqff2M0NvZfnofyRtuPB.jpg"
-                        alt="User Avatar" class="rounded-circle" height="40" width="40" />
-                    <li class="nav dropdown">
-                        <a class="nav-link" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a href="{{ url('dashboard') }}" class="nav-link text-primary">Video</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-primary">Pertanyaan</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link d-flex align-items-center" href="#" id="navbarScrollingDropdown"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://storage.googleapis.com/a1aa/image/vudA2588jCKiJh7nsKVox2N8cNpa7Mqff2M0NvZfnofyRtuPB.jpg"
+                                alt="User Avatar" class="rounded-circle me-2" height="40" width="40" />
                             <p class="fw-bold mb-0">{{ session('user')->nama_lengkap }}</p>
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                            <li><a class="dropdown-item text-primary" href="{{ url('/profile') }}">Profile</a></li>
-                            <li><a class="dropdown-item text-danger" href="{{ url('/logout') }}">logout</a></li>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarScrollingDropdown">
+                            <li>
+                                <a class="dropdown-item text-primary" href="{{ url('/profile') }}">Profile</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-danger" href="{{ url('/logout') }}">Logout</a>
+                            </li>
                         </ul>
-                      </li>
-                </div>
-            </nav>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
     <div class="pt-5"></div>

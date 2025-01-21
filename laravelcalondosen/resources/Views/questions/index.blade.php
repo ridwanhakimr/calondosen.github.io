@@ -122,23 +122,32 @@
             </button>
 
             <!-- Navbar Menu -->
-            <nav class="d-flex align-items-center gap-3">
-                <a href="{{ url ('dashboard')}}" class="text-primary text-decoration-none">Video</a>
-                <a href="#" class="text-primary text-decoration-none">Pertanyaan</a>
-                <div class="d-flex align-items-center">
-                    <img src="https://storage.googleapis.com/a1aa/image/vudA2588jCKiJh7nsKVox2N8cNpa7Mqff2M0NvZfnofyRtuPB.jpg"
-                        alt="User Avatar" class="rounded-circle" height="40" width="40" />
-                    <li class="nav dropdown">
-                        <a class="nav-link" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a href="{{ url('dashboard') }}" class="nav-link text-primary">Video</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-primary">Pertanyaan</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link d-flex align-items-center" href="#" id="navbarScrollingDropdown"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://storage.googleapis.com/a1aa/image/vudA2588jCKiJh7nsKVox2N8cNpa7Mqff2M0NvZfnofyRtuPB.jpg"
+                                alt="User Avatar" class="rounded-circle me-2" height="40" width="40" />
                             <p class="fw-bold mb-0">{{ session('user')->nama_lengkap }}</p>
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                            <li><a class="dropdown-item text-primary" href="{{ url('/profile') }}">Profile</a></li>
-                            <li><a class="dropdown-item text-danger" href="{{ url('/logout') }}">logout</a></li>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarScrollingDropdown">
+                            <li>
+                                <a class="dropdown-item text-primary" href="{{ url('/profile') }}">Profile</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-danger" href="{{ url('/logout') }}">Logout</a>
+                            </li>
                         </ul>
-                      </li>
-                </div>
-            </nav>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
     <div class="pt-5"></div>
@@ -154,53 +163,50 @@
         <div class="container mt-5">
             <!-- Row dengan 2 Form -->
             <div class="row g-4">
-            <h1>Daftar Pertanyaan</h1>
-            <!-- Tombol Tambah Pertanyaan -->
-            <a href="{{ route('questions.create') }}">
-                <button>Tambah Pertanyaan</button>
-            </a>
+                <h1>Daftar Pertanyaan</h1>
+                <!-- Tombol Tambah Pertanyaan -->
+                <a href="{{ route('questions.create') }}">
+                    <button>Tambah Pertanyaan</button>
+                </a>
 
-            <form method="GET" action="{{ route('questions.index') }}">
-                <label for="category">Filter Kategori:</label>
-                <select name="category" id="category" onchange="this.form.submit()">
-                    @foreach ($categories as $cat)
-                        <option value="{{ $cat }}" {{ $cat === $category ? 'selected' : '' }}>
-                            {{ $cat }}
-                        </option>
-                    @endforeach
-                </select>
-            </form>
+                <form method="GET" action="{{ route('questions.index') }}">
+                    <label for="category">Filter Kategori:</label>
+                    <select name="category" id="category" onchange="this.form.submit()">
+                        @foreach ($categories as $cat)
+                            <option value="{{ $cat }}" {{ $cat === $category ? 'selected' : '' }}>
+                                {{ $cat }}
+                            </option>
+                        @endforeach
+                    </select>
+                </form>
 
-            @foreach ($questions as $question)
-                <div>
-                    <h3>{{ $question->title }}</h3>
-                    <p>Kategori: {{ $question->category }}</p>
-                    <p>Dibuat oleh: {{ $question->user->nama_lengkap }}</p>
-                    <a href="{{ route('questions.show', $question->id) }}">Lihat Pertanyaan</a>
-                    @if (session('user')->id_user == $question->user_id)
-                        <form action="{{ route('questions.destroy', $question->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit">Hapus</button>
-                        </form>
-                    @endif
-                </div>
-            @endforeach
-
-
-            <!-- Footer -->
-            <footer class="bg-dark text-center py-4 mt-5">
-                <p class="mb-0 text-light">© 2025 Calon Dosen. Semua Hak Dilindungi.</p>
-                <div class="mt-2">
-                    <a href="#" class="text-light me-2"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="text-light me-2"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
-                </div>
-            </footer>
+                @foreach ($questions as $question)
+                    <div>
+                        <h3>{{ $question->title }}</h3>
+                        <p>Kategori: {{ $question->category }}</p>
+                        <p>Dibuat oleh: {{ $question->user->nama_lengkap }}</p>
+                        <a href="{{ route('questions.show', $question->id) }}">Lihat Pertanyaan</a>
+                        @if (session('user')->id_user == $question->user_id)
+                            <form action="{{ route('questions.destroy', $question->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit">Hapus</button>
+                            </form>
+                        @endif
+                    </div>
+                @endforeach
             </div>
         </div>
     </main>
-    
+        <!-- Footer -->
+        <footer class="bg-dark text-center py-4 mt-5">
+            <p class="mb-0 text-light">© 2025 Calon Dosen. Semua Hak Dilindungi.</p>
+            <div class="mt-2">
+                <a href="#" class="text-light me-2"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-light me-2"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+            </div>
+        </footer>
 
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

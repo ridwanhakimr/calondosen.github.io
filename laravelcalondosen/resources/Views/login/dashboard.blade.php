@@ -122,23 +122,32 @@
             </button>
 
             <!-- Navbar Menu -->
-            <nav class="d-flex align-items-center gap-3">
-                <a href="#" class="text-primary text-decoration-none">Video</a>
-                <a href="{{ url ('questions')}}" class="text-primary text-decoration-none">Pertanyaan</a>
-                <div class="d-flex align-items-center">
-                    <img src="https://storage.googleapis.com/a1aa/image/vudA2588jCKiJh7nsKVox2N8cNpa7Mqff2M0NvZfnofyRtuPB.jpg"
-                        alt="User Avatar" class="rounded-circle" height="40" width="40" />
-                    <li class="nav dropdown">
-                        <a class="nav-link" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-primary">Video</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('questions') }}" class="nav-link text-primary">Pertanyaan</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link d-flex align-items-center" href="#" id="navbarScrollingDropdown"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://storage.googleapis.com/a1aa/image/vudA2588jCKiJh7nsKVox2N8cNpa7Mqff2M0NvZfnofyRtuPB.jpg"
+                                alt="User Avatar" class="rounded-circle me-2" height="40" width="40" />
                             <p class="fw-bold mb-0">{{ session('user')->nama_lengkap }}</p>
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                            <li><a class="dropdown-item text-primary" href="{{ url('/profile') }}">Profile</a></li>
-                            <li><a class="dropdown-item text-danger" href="{{ url('/logout') }}">logout</a></li>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarScrollingDropdown">
+                            <li>
+                                <a class="dropdown-item text-primary" href="{{ url('/profile') }}">Profile</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-danger" href="{{ url('/logout') }}">Logout</a>
+                            </li>
                         </ul>
-                      </li>
-                </div>
-            </nav>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
     <div class="pt-5"></div>
@@ -154,31 +163,30 @@
         <!-- Video Section -->
         <section id="video" class="mt-4">
             <a href="{{ route('videos.create') }}">
-                <button>Tambah Video</button>
+                <button class="btn btn-primary mb-3">Tambah Video</button>
             </a>
-
-            <h2>Video Pembelajaran</h2>
-            <form method="GET" action="{{ route('dashboard') }}">
-                <label for="category">Filter Kategori:</label>
-                <select name="category" id="category" onchange="this.form.submit()">
+            <form method="GET" action="{{ route('dashboard') }}" class="d-flex align-items-center mb-3">
+                <label for="genreSelect" class="form-label me-3 text-light"><strong>Pilih Genre/Mata
+                Pelajaran:</strong></label>
+                <select name="category" id="category" onchange="this.form.submit()" class="form-select" style="background-color: #333333; color: #e0e0e0; border-color: #555555;">
                     @foreach ($categories as $cat)
-                        <option value="{{ $cat }}" {{ $cat === $category ? 'selected' : '' }}>
+                        <option style="background-color: #333333; color: #e0e0e0;" value="{{ $cat }}" {{ $cat === $category ? 'selected' : '' }}>
                             {{ $cat }}
                         </option>
                     @endforeach
                 </select>
             </form>
-            <div>
+            <div class="row g-4">
                 @forelse ($videos as $video)
-                    <div style="margin-bottom: 20px;">
-                        <h3>{{ $video->title }}</h3>
-                        <p>{{ $video->description }}</p>
+                <div style="margin-bottom: 20px;" class="col-md-4">
+                        <a href="{{ route('videos.show', $video->id) }}">
+                            <video width="300" controls>
+                                <source src="{{ asset('storage/' . $video->video_path) }}" type="video/mp4">
+                            </video>
+                            <h3>{{ $video->title }}</h3>
+                        </a>
                         <p>Kategori: {{ $video->category }}</p>
                         <p>Pengirim: {{ $video->user->nama_lengkap }}</p>
-                        <video width="300" controls>
-                            <source src="{{ asset('storage/' . $video->video_path) }}" type="video/mp4">
-                        </video><br>
-                        <a href="{{ route('videos.show', $video->id) }}">Tampilkan Video Besar</a><br>
                         @if (session('user')->id_user == $video->user_id)
                             <a href="{{ route('videos.edit', $video->id) }}">Edit</a>
                             <form action="{{ route('videos.destroy', $video->id) }}" method="POST">
