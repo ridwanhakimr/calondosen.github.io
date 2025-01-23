@@ -4,50 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
     <style>
         body {
             background-color: #121212;
-            /* Dark background for body */
             color: #e0e0e0;
-            /* Light text color for dark mode */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         .navbar {
             background-color: #1f1f1f;
-            /* Dark background for navbar */
         }
 
         .navbar a {
             color: #d1d1d1;
-            /* Light text color for navbar links */
         }
 
         .navbar a:hover {
             color: #4e9fd1;
-            /* Blue accent on hover */
         }
 
         .card {
             background-color: #2c2c2c;
-            /* Dark card background */
             border: none;
-            /* Remove border for cards */
             color: #e0e0e0;
-            /* Light text inside cards */
             border-radius: 10px;
         }
 
         .card-title {
             color: #ffffff;
-            /* White title for the card */
         }
 
         .card-img-top {
             border-bottom: 2px solid #444444;
-            /* Dark border below video */
         }
 
         .bg-primary {
@@ -56,9 +50,7 @@
 
         .footer {
             background-color: #1f1f1f;
-            /* Dark background for footer */
             color: #e0e0e0;
-            /* Light text color for footer */
         }
 
         .footer a {
@@ -67,7 +59,6 @@
 
         .footer a:hover {
             color: #4e9fd1;
-            /* Blue accent on hover */
         }
 
         .btn-primary {
@@ -82,28 +73,15 @@
 
         .form-select {
             background-color: rgba(255, 255, 255, 0.2);
-            /* Slightly dark inputs */
             color: #f0f0f0;
-            /* Light text inside inputs */
             border: 1px solid rgba(255, 255, 255, 0.3);
-            /* Light border */
-            border-radius: 5px;
-        }
-
-        .form-select option {
-            background-color: rgba(255, 255, 255, 0.2);
-            /* Slightly dark inputs */
-            color: #f0f0f0;
-            /* Light text inside inputs */
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            /* Light border */
             border-radius: 5px;
         }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container d-flex justify-content-between align-items-center">
             <!-- Logo and Text -->
             <div class="d-flex align-items-center">
@@ -125,25 +103,19 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a href="#" class="nav-link text-primary">Video</a>
+                        <a href="{{ url('dashboard') }}" class="nav-link text-primary">Video</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ url('questions') }}" class="nav-link text-primary">Pertanyaan</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link d-flex align-items-center" href="#" id="navbarScrollingDropdown"
-                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://storage.googleapis.com/a1aa/image/vudA2588jCKiJh7nsKVox2N8cNpa7Mqff2M0NvZfnofyRtuPB.jpg"
-                                alt="User Avatar" class="rounded-circle me-2" height="40" width="40" />
-                            <p class="fw-bold mb-0">{{ session('user')->nama_lengkap }}</p>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://storage.googleapis.com/a1aa/image/vudA2588jCKiJh7nsKVox2N8cNpa7Mqff2M0NvZfnofyRtuPB.jpg" alt="User Avatar" class="rounded-circle me-2" height="40" width="40">
+                            {{ session('user')->nama_lengkap }}
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarScrollingDropdown">
-                            <li>
-                                <a class="dropdown-item text-primary" href="{{ url('/profile') }}">Profile</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item text-danger" href="{{ url('/logout') }}">Logout</a>
-                            </li>
+                        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{{ url('/profile') }}">Profile</a></li>
+                            <li><a class="dropdown-item text-danger" href="{{ url('/logout') }}">Logout</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -160,92 +132,68 @@
             <p class="mb-0">Temukan mata pelajaran yang ingin kamu pelajari</p>
         </div>
 
-        <!-- Video Section -->
         <section id="video" class="mt-4">
-            <a href="{{ route('videos.create') }}">
-                <button class="btn btn-primary mb-3">Tambah Video</button>
-            </a>
+            <div class="text-end">
+                <a href="{{ route('videos.create') }}">
+                    <button class="btn btn-primary mb-3">Tambah Video</button>
+                </a>
+            </div>
             <form method="GET" action="{{ route('dashboard') }}" class="d-flex align-items-center mb-3">
-                <label for="genreSelect" class="form-label me-3 text-light"><strong>Pilih Genre/Mata
-                Pelajaran:</strong></label>
-                <select name="category" id="category" onchange="this.form.submit()" class="form-select" style="background-color: #333333; color: #e0e0e0; border-color: #555555;">
+                <label for="genreSelect" class="form-label me-3 text-light"><strong>Pilih Genre/Mata Pelajaran:</strong></label>
+                <select name="category" id="category" class="form-select" style="background-color: #333333; color: #e0e0e0; border: 1px solid #555555;" onchange="this.form.submit()" class="form-select">
                     @foreach ($categories as $cat)
-                        <option style="background-color: #333333; color: #e0e0e0;" value="{{ $cat }}" {{ $cat === $category ? 'selected' : '' }}>
-                            {{ $cat }}
-                        </option>
+                        <option value="{{ $cat }}" {{ $cat === $category ? 'selected' : '' }}>{{ $cat }}</option>
                     @endforeach
                 </select>
             </form>
-            <div class="row g-4">
+
+            <div class="row g-4 mt-4 mb-5">
                 @forelse ($videos as $video)
-                <div style="margin-bottom: 20px;" class="col-md-4">
-                        <a href="{{ route('videos.show', $video->id) }}">
-                            <video width="300" controls>
-                                <source src="{{ asset('storage/' . $video->video_path) }}" type="video/mp4">
-                            </video>
-                            <h3>{{ $video->title }}</h3>
-                        </a>
-                        <p>Kategori: {{ $video->category }}</p>
-                        <p>Pengirim: {{ $video->user->nama_lengkap }}</p>
-                        @if (session('user')->id_user == $video->user_id)
-                            <a href="{{ route('videos.edit', $video->id) }}">Edit</a>
-                            <form action="{{ route('videos.destroy', $video->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit">Hapus</button>
-                            </form>
-                        @endif
+                    <div class="col-md-4">
+                        <div class="card">
+                            <a href="{{ route('videos.show', $video->id) }}" class="text-decoration-none text-dark">
+                                <video class="card-img-top" controls>
+                                    <source src="{{ asset('storage/' . $video->video_path) }}" type="video/mp4">
+                                </video>
+                                <div class="card-body">
+                                    <h5 class="card-title text-start fs-3">{{ $video->title }}</h5>
+                                </div>
+                            </a>
+                            <div class="card-body">
+                                <p class="card-text text-start"><strong>Kategori:</strong> {{ $video->category }}</p>
+                                <p class="card-text text-start"><strong>Pengirim:</strong> {{ $video->user->nama_lengkap }}</p>
+                                {{-- @if (session('user')->id_user == $video->user_id)
+                                    <div class="row">
+                                        <div class="col text-start">
+                                            <a href="{{ route('videos.edit', $video->id) }}" class="btn btn-outline-warning btn-sm">
+                                                <i class="bi bi-pencil-square"></i> Edit
+                                            </a>
+                                        </div>
+                                        <div class="col text-end">
+                                            <form action="{{ route('videos.destroy', $video->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                    <i class="bi bi-trash"></i> Hapus
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                @endif --}}
+                            </div>
+                        </div>
                     </div>
                 @empty
-                    <p>Tidak ada video untuk kategori ini.</p>
+                    <div class="col-12">
+                        <p class="text-center">Tidak ada video untuk kategori ini.</p>
+                    </div>
                 @endforelse
             </div>
-            <!-- <div class="pilih d-flex align-items-center mb-3">
-                <label for="genreSelect" class="form-label me-3 text-light"><strong>Pilih Genre/Mata
-                        Pelajaran:</strong></label>
-                <select class="form-select" id="genreSelect"
-                    style="background-color: #333333; color: #e0e0e0; border-color: #555555;">
-                    <option value="all" style="background-color: #333333; color: #e0e0e0;">Semua</option>
-                    <option value="general" style="background-color: #333333; color: #e0e0e0;">Umum</option>
-                    <option value="math" style="background-color: #333333; color: #e0e0e0;">Matematika</option>
-                    <option value="indonesian" style="background-color: #333333; color: #e0e0e0;">Bahasa Indonesia
-                    </option>
-                    <option value="english" style="background-color: #333333; color: #e0e0e0;">Bahasa Inggris</option>
-                    <option value="civics" style="background-color: #333333; color: #e0e0e0;">PPKn</option>
-                    <option value="science" style="background-color: #333333; color: #e0e0e0;">IPA</option>
-                    <option value="social" style="background-color: #333333; color: #e0e0e0;">IPS</option>
-                    <option value="it" style="background-color: #333333; color: #e0e0e0;">Teknik Informatika</option>
-                </select>
-            </div> -->
-
-            <!-- video -->
-            <!-- <div class="row g-4"> g-4 adds space between the cards -->
-                <!-- <div class="col-md-4">
-                    <div class="card">
-                        <iframe class="card-img-top" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video 1"
-                            frameborder="0" allowfullscreen></iframe>
-                        <div class="card-body">
-                            <h5 class="card-title">Video 1</h5>
-                            <p class="card-text">Deskripsi singkat video 1.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <iframe class="card-img-top" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video 1"
-                            frameborder="0" allowfullscreen></iframe>
-                        <div class="card-body">
-                            <h5 class="card-title">Video 2</h5>
-                            <p class="card-text">Deskripsi singkat video 1.</p>
-                        </div>
-                    </div>
-                </div> -->
-            
         </section>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-dark text-center py-4 mt-5">
+    <footer class="bg-dark text-center py-4 mt-auto">
         <p class="mb-0 text-light">© 2025 Calon Dosen. Semua Hak Dilindungi.</p>
         <div class="mt-2">
             <a href="#" class="text-light me-2"><i class="fab fa-facebook-f"></i></a>
@@ -254,7 +202,6 @@
         </div>
     </footer>
 
-    <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -101,6 +102,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -125,25 +127,21 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a href="#" class="nav-link text-primary">Video</a>
+                        <a href="{{ url('dashboard') }}" class="nav-link text-primary">Video</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ url('questions') }}" class="nav-link text-primary">Pertanyaan</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link d-flex align-items-center" href="#" id="navbarScrollingDropdown"
-                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="https://storage.googleapis.com/a1aa/image/vudA2588jCKiJh7nsKVox2N8cNpa7Mqff2M0NvZfnofyRtuPB.jpg"
-                                alt="User Avatar" class="rounded-circle me-2" height="40" width="40" />
-                            <p class="fw-bold mb-0">{{ session('user')->nama_lengkap }}</p>
+                                alt="User Avatar" class="rounded-circle me-2" height="40" width="40">
+                            {{ session('user')->nama_lengkap }}
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarScrollingDropdown">
-                            <li>
-                                <a class="dropdown-item text-primary" href="{{ url('/profile') }}">Profile</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item text-danger" href="{{ url('/logout') }}">Logout</a>
-                            </li>
+                        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{{ url('/profile') }}">Profile</a></li>
+                            <li><a class="dropdown-item text-danger" href="{{ url('/logout') }}">Logout</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -154,7 +152,11 @@
     <div class="pt-5"></div>
 
     <!-- Main Content -->
-    <h1>Tambah Video</h1>
+
+
+    <div class="container">
+
+        <h1 class="mb-5">Tambah Video</h1>
 
         @if ($errors->any())
             <div style="color: red;">
@@ -166,28 +168,64 @@
             </div>
         @endif
 
-        <form action="{{ route('videos.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('videos.store') }}" method="POST" enctype="multipart/form-data"
+            class="p-4 rounded shadow" style="background-color: #1f1f1f; color: #e0e0e0;">
             @csrf
-            <label for="title">Judul Video:</label><br>
-            <input type="text" id="title" name="title" required><br><br>
+            <!-- Judul Video -->
+            <div class="mb-3">
+                <label for="title" class="form-label"><strong>Judul Video:</strong></label>
+                <input type="text" id="title" name="title" class="form-control"
+                    style="background-color: #333333; color: #e0e0e0; border: 1px solid #555555;"
+                    placeholder="Masukkan judul video" required>
+            </div>
 
-            <label for="description">Deskripsi Video:</label><br>
-            <textarea id="description" name="description" required></textarea><br><br>
+            <!-- Deskripsi Video -->
+            <div class="mb-3">
+                <label for="description" class="form-label"><strong>Deskripsi Video:</strong></label>
+                <textarea id="description" name="description" class="form-control"
+                    style="background-color: #333333; color: #e0e0e0; border: 1px solid #555555;" rows="4"
+                    placeholder="Tulis deskripsi video" required></textarea>
+            </div>
 
-            <label for="category">Kategori:</label><br>
-            <select id="category" name="category" required>
-                @foreach ($categories as $category)
-                    <option value="{{ $category }}">{{ $category }}</option>
-                @endforeach
-            </select><br><br>
+            <!-- Kategori -->
+            <div class="mb-3">
+                <label for="category" class="form-label"><strong>Kategori:</strong></label>
+                <select id="category" name="category" class="form-select"
+                    style="background-color: #333333; color: #e0e0e0; border: 1px solid #555555;" required>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category }}">{{ $category }}</option>
+                    @endforeach
+                </select>
+            </div>
 
-            <label for="video">Unggah Video:</label><br>
-            <input type="file" id="video" name="video" accept="video/*" required><br><br>
+            <!-- Unggah Video -->
+            <div class="mb-4">
+                <label for="video" class="form-label"><strong>Unggah Video:</strong></label>
+                <input type="file" id="video" name="video" class="form-control"
+                    style="background-color: #333333; color: #e0e0e0; border: 1px solid #555555;" accept="video/*"
+                    required>
+            </div>
 
-            <button type="submit">Tambah Video</button>
+            <div class="row g-3">
+
+                <!-- Kembali ke Profil -->
+                <div class="col-12 col-md-6">
+                    <a href="{{ route('dashboard') }}" class="btn btn-secondary w-100">Kembali ke Profil</a>
+                </div>
+                <!-- Tombol Submit -->
+                <div class="col-12 col-md-6">
+                    <button type="submit" class="btn btn-primary w-100"
+                        style="background-color: #007bff; border-color: #007bff;">Tambah Video</button>
+                </div>
+
+            </div>
+
+
         </form>
+    </div>
 
-        <a href="{{ route('profile') }}">Kembali ke Profil</a>
+
+
 
     <!-- Footer -->
     <footer class="bg-dark text-center py-4 mt-5">
@@ -202,4 +240,5 @@
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

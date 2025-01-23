@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -99,8 +100,50 @@
             /* Light border */
             border-radius: 5px;
         }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .modal-content {
+            background-color: #333333;
+            color: #f0f0f0;
+        }
+
+        .modal-header {
+            border-bottom: 1px solid #444444;
+        }
+
+        .modal-footer {
+            border-top: 1px solid #444444;
+        }
+
+        .btn-close {
+            background-color: #444444;
+            border: none;
+        }
+
+        .btn-close:hover {
+            background-color: #666666;
+        }
+
+        .modal-title {
+            color: #f0f0f0;
+        }
+
+        .modal-body p {
+            color: #d3d3d3;
+        }
+
+        .form-control::placeholder {
+            color: #ffffff;
+            opacity: 1;
+            /* Menghilangkan transparansi default pada placeholder */
+        }
     </style>
 </head>
+
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -128,22 +171,16 @@
                         <a href="{{ url('dashboard') }}" class="nav-link text-primary">Video</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link text-primary">Pertanyaan</a>
+                        <a href="{{ url('questions') }}" class="nav-link text-primary">Pertanyaan</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link d-flex align-items-center" href="#" id="navbarScrollingDropdown"
-                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://storage.googleapis.com/a1aa/image/vudA2588jCKiJh7nsKVox2N8cNpa7Mqff2M0NvZfnofyRtuPB.jpg"
-                                alt="User Avatar" class="rounded-circle me-2" height="40" width="40" />
-                            <p class="fw-bold mb-0">{{ session('user')->nama_lengkap }}</p>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://storage.googleapis.com/a1aa/image/vudA2588jCKiJh7nsKVox2N8cNpa7Mqff2M0NvZfnofyRtuPB.jpg" alt="User Avatar" class="rounded-circle me-2" height="40" width="40">
+                            {{ session('user')->nama_lengkap }}
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarScrollingDropdown">
-                            <li>
-                                <a class="dropdown-item text-primary" href="{{ url('/profile') }}">Profile</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item text-danger" href="{{ url('/logout') }}">Logout</a>
-                            </li>
+                        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{{ url('/profile') }}">Profile</a></li>
+                            <li><a class="dropdown-item text-danger" href="{{ url('/logout') }}">Logout</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -163,52 +200,169 @@
         <div class="container mt-5">
             <!-- Row dengan 2 Form -->
             <div class="row g-4">
+                <!-- Kolom Form 1 -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm">
+                        <div class="card-body ">
+                            <h2 class="mb-3 text-left">Tambah Pertanyaan Baru</h2>
+                            <form action="{{ route('questions.store') }}" method="POST"
+                                class=" text-light p-4 rounded text-start">
+                                @csrf
+
+                                <!-- Judul Pertanyaan -->
+                                <div class="mb-3">
+                                    <label for="title" class="form-label">Judul Pertanyaan</label>
+                                    <input type="text" id="title" name="title"
+                                        class="form-control  text-light border-secondary"
+                                        placeholder="Masukkan judul pertanyaan"
+                                        style="background-color: #333333; color: #ffffff; border-color: #555555;"
+                                        required>
+                                </div>
+
+                                <!-- Isi Pertanyaan -->
+                                <div class="mb-3">
+                                    <label for="content" class="form-label">Isi Pertanyaan</label>
+                                    <textarea id="content" name="content" class="form-control  text-light border-secondary" rows="5"
+                                        placeholder="Jelaskan pertanyaan Anda" style="background-color: #333333; color: #ffffff; border-color: #555555;"
+                                        required></textarea>
+                                </div>
+
+                                <!-- Kategori -->
+                                <div class="mb-3">
+                                    <label for="category" class="form-label">Kategori</label>
+                                    <select id="category" name="category"
+                                        class="form-select  text-light border-secondary"
+                                        style="background-color: #333333; color: #ffffff; border-color: #555555;"required>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category }}">{{ $category }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <!-- Tombol -->
+                                <div class="d-flex justify-content-between">
+                                    <button type="submit" class="btn btn-success">Tambah Pertanyaan</button>
+                                    {{-- <a href="{{ route('dashboard') }}" class="btn btn-secondary">Kembali</a> --}}
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kolom Form 2 -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h2 class="mb-3 text-left">Jawaban</h2>
+                            <!-- Daftar Pertanyaan -->
+                            <div class="col">
+                                <form method="GET" action="{{ route('questions.index') }}">
+                                    <div class="row align-items-center mb-3">
+                                        <div class="col-12 col-md-4">
+                                            <label for="category" class="form-label text-light">Filter
+                                                Kategori:</label>
+                                        </div>
+                                        <div class="col-12 col-md-8">
+                                            <select name="category" id="category" class="form-select"
+                                                style="background-color: #333333; color: #ffffff; border-color: #555555;"
+                                                onchange="this.form.submit()">
+                                                @foreach ($categories as $cat)
+                                                    <option value="{{ $cat }}"
+                                                        {{ $cat === $category ? 'selected' : '' }}>
+                                                        {{ $cat }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                                <div class="card shadow-sm">
+                                    <div class="card-body">
+                                        <!-- Container Scrollable -->
+                                        <div class="overflow-auto gap-4 text-start" style="max-height: 350px;">
+                                            @foreach ($questions as $question)
+                                                <!-- Card for Each Question -->
+                                                <div class="card mb-3 text-light border-secondary"
+                                                    style="background-color: #333333; color: #ffffff; border-color: #555555;">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">{{ $question->title }}</h5>
+                                                        <p class="card-text mb-1">
+                                                            <strong>Kategori:</strong> {{ $question->category }}
+                                                        </p>
+                                                        <p class="card-text mb-1">
+                                                            <strong>Dibuat oleh:</strong>
+                                                            {{ $question->user->nama_lengkap }}
+                                                        </p>
+                                                        <a href="{{ route('questions.show', $question->id) }}"
+                                                            class="btn btn-primary btn-sm">
+                                                            Lihat Pertanyaan
+                                                        </a>
+                                                        {{-- @if (session('user')->id_user == $question->user_id)
+                                                            <form
+                                                                action="{{ route('questions.destroy', $question->id) }}"
+                                                                method="POST" class="d-inline">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-danger btn-sm">
+                                                                    Hapus
+                                                                </button>
+                                                            </form>
+                                                        @endif --}}
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <!-- Main Content -->
+    {{-- <main class="container text-center mt-4">
+        <div class="bg-primary text-white py-5 rounded" style="background: linear-gradient(45deg, #007bff, #c278ff);">
+            <h2 class="text-center mb-4">Pertanyaan</h2>
+            <p class="mb-0">Tanyakan apapun</p>
+        </div>
+
+
+
+        <!-- Main Content -->
+        <div class="container mt-5">
+            <!-- Row dengan 2 Form -->
+            <div class="row g-4">
                 <h1>Daftar Pertanyaan</h1>
                 <!-- Tombol Tambah Pertanyaan -->
                 <a href="{{ route('questions.create') }}">
                     <button>Tambah Pertanyaan</button>
                 </a>
 
-                <form method="GET" action="{{ route('questions.index') }}">
-                    <label for="category">Filter Kategori:</label>
-                    <select name="category" id="category" onchange="this.form.submit()">
-                        @foreach ($categories as $cat)
-                            <option value="{{ $cat }}" {{ $cat === $category ? 'selected' : '' }}>
-                                {{ $cat }}
-                            </option>
-                        @endforeach
-                    </select>
-                </form>
 
-                @foreach ($questions as $question)
-                    <div>
-                        <h3>{{ $question->title }}</h3>
-                        <p>Kategori: {{ $question->category }}</p>
-                        <p>Dibuat oleh: {{ $question->user->nama_lengkap }}</p>
-                        <a href="{{ route('questions.show', $question->id) }}">Lihat Pertanyaan</a>
-                        @if (session('user')->id_user == $question->user_id)
-                            <form action="{{ route('questions.destroy', $question->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit">Hapus</button>
-                            </form>
-                        @endif
-                    </div>
-                @endforeach
+
             </div>
         </div>
-    </main>
-        <!-- Footer -->
-        <footer class="bg-dark text-center py-4 mt-5">
-            <p class="mb-0 text-light">© 2025 Calon Dosen. Semua Hak Dilindungi.</p>
-            <div class="mt-2">
-                <a href="#" class="text-light me-2"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="text-light me-2"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
-            </div>
-        </footer>
+    </main> --}}
+    <!-- Footer -->
+    <footer class="bg-dark text-center py-4 mt-5">
+        <p class="mb-0 text-light">© 2025 Calon Dosen. Semua Hak Dilindungi.</p>
+        <div class="mt-2">
+            <a href="#" class="text-light me-2"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-light me-2"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
 
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

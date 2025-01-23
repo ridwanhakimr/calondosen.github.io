@@ -102,67 +102,68 @@
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-        <div class="container d-flex justify-content-between align-items-center">
-            <!-- Logo and Text -->
-            <div class="d-flex align-items-center">
-                <img src="https://github.com/ridwanhakimr/gambar/blob/main/image/Logo.png?raw=true"
-                    alt="LearningX Academy Logo" height="50" width="50" class="me-2" />
-                <div>
-                    <h1 class="h5 fw-bold mb-0">Calon Dosen</h1>
-                    <p class="small text-secondary mb-0">Belajar bersama Calon Dosen.</p>
-                </div>
-            </div>
-
-            <!-- Navbar Toggler -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Navbar Menu -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link text-primary">Video</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ url('questions') }}" class="nav-link text-primary">Pertanyaan</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link d-flex align-items-center" href="#" id="navbarScrollingDropdown"
-                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://storage.googleapis.com/a1aa/image/vudA2588jCKiJh7nsKVox2N8cNpa7Mqff2M0NvZfnofyRtuPB.jpg"
-                                alt="User Avatar" class="rounded-circle me-2" height="40" width="40" />
-                            <p class="fw-bold mb-0">{{ session('user')->nama_lengkap }}</p>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarScrollingDropdown">
-                            <li>
-                                <a class="dropdown-item text-primary" href="{{ url('/profile') }}">Profile</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item text-danger" href="{{ url('/logout') }}">Logout</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+   <!-- Navbar -->
+   <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container d-flex justify-content-between align-items-center">
+        <!-- Logo and Text -->
+        <div class="d-flex align-items-center">
+            <img src="https://github.com/ridwanhakimr/gambar/blob/main/image/Logo.png?raw=true"
+                alt="LearningX Academy Logo" height="50" width="50" class="me-2" />
+            <div>
+                <h1 class="h5 fw-bold mb-0">Calon Dosen</h1>
+                <p class="small text-secondary mb-0">Belajar bersama Calon Dosen.</p>
             </div>
         </div>
-    </nav>
-    <div class="pt-5"></div>
-    <div class="pt-5"></div>
 
-    <!-- Main Content -->
-    <video width="800" controls>
-        <source src="{{ asset('storage/' . $video->video_path) }}" type="video/mp4">
-    </video>
-    <h1>{{ $video->title }}</h1>
-    <p>{{ $video->description }}</p>
-    <p>Kategori: {{ $video->category }}</p>
-    <p>Pengirim: {{ $video->user->nama_lengkap }}</p>
-    <a href="{{ route('dashboard') }}">Kembali ke Dashboard</a>
+        <!-- Navbar Toggler -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
+        <!-- Navbar Menu -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item">
+                    <a href="{{ url('dashboard') }}" class="nav-link text-primary">Video</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url('questions') }}" class="nav-link text-primary">Pertanyaan</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://storage.googleapis.com/a1aa/image/vudA2588jCKiJh7nsKVox2N8cNpa7Mqff2M0NvZfnofyRtuPB.jpg" alt="User Avatar" class="rounded-circle me-2" height="40" width="40">
+                        {{ session('user')->nama_lengkap }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                        <li><a class="dropdown-item" href="{{ url('/profile') }}">Profile</a></li>
+                        <li><a class="dropdown-item text-danger" href="{{ url('/logout') }}">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="pt-5"></div>
+<div class="pt-5"></div>
+
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <video class="w-100 rounded mb-3" controls>
+                    <source src="{{ asset('storage/' . $video->video_path) }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="text-start">
+                    <h1 class="fs-3">{{ $video->title }}</h1>
+                    <p class="text-muted">{{ $video->description }}</p>
+                    <p><strong>Kategori:</strong> {{ $video->category }}</p>
+                    <p><strong>Pengirim:</strong> {{ $video->user->nama_lengkap }}</p>
+                    <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-3">Kembali</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Footer -->
     <footer class="bg-dark text-center py-4 mt-5">
         <p class="mb-0 text-light">© 2025 Calon Dosen. Semua Hak Dilindungi.</p>

@@ -178,8 +178,8 @@
         <div class="col-md-3 col-lg-2 col-md-3 mx-auto mt-3">
           <h5 class="text-uppercase mb-4 font-weight-bold">Contacts</h5>
           <ul class="list-unstyled">
-            <li><a href="tel:02220458359">022-20458359</a></li>
-            <li><a href="mailto:sanscoworking@gmail.com">sanscoworking@gmail.com</a></li>
+            <li><a href="tel:02220458359">022-2045976876</a></li>
+            <li><a href="mailto:sanscoworking@gmail.com">calondosen@gmail.com</a></li>
           </ul>
         </div>
       </div>

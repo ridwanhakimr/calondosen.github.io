@@ -102,56 +102,50 @@
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-        <div class="container d-flex justify-content-between align-items-center">
-            <!-- Logo and Text -->
-            <div class="d-flex align-items-center">
-                <img src="https://github.com/ridwanhakimr/gambar/blob/main/image/Logo.png?raw=true"
-                    alt="LearningX Academy Logo" height="50" width="50" class="me-2" />
-                <div>
-                    <h1 class="h5 fw-bold mb-0">Calon Dosen</h1>
-                    <p class="small text-secondary mb-0">Belajar bersama Calon Dosen.</p>
-                </div>
-            </div>
-
-            <!-- Navbar Toggler -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Navbar Menu -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link text-primary">Video</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ url('questions') }}" class="nav-link text-primary">Pertanyaan</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link d-flex align-items-center" href="#" id="navbarScrollingDropdown"
-                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://storage.googleapis.com/a1aa/image/vudA2588jCKiJh7nsKVox2N8cNpa7Mqff2M0NvZfnofyRtuPB.jpg"
-                                alt="User Avatar" class="rounded-circle me-2" height="40" width="40" />
-                            <p class="fw-bold mb-0">{{ session('user')->nama_lengkap }}</p>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarScrollingDropdown">
-                            <li>
-                                <a class="dropdown-item text-primary" href="{{ url('/profile') }}">Profile</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item text-danger" href="{{ url('/logout') }}">Logout</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+   <!-- Navbar -->
+   <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container d-flex justify-content-between align-items-center">
+        <!-- Logo and Text -->
+        <div class="d-flex align-items-center">
+            <img src="https://github.com/ridwanhakimr/gambar/blob/main/image/Logo.png?raw=true"
+                alt="LearningX Academy Logo" height="50" width="50" class="me-2" />
+            <div>
+                <h1 class="h5 fw-bold mb-0">Calon Dosen</h1>
+                <p class="small text-secondary mb-0">Belajar bersama Calon Dosen.</p>
             </div>
         </div>
-    </nav>
-    <div class="pt-5"></div>
-    <div class="pt-5"></div>
+
+        <!-- Navbar Toggler -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Menu -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item">
+                    <a href="{{ url('dashboard') }}" class="nav-link text-primary">Video</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url('questions') }}" class="nav-link text-primary">Pertanyaan</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://storage.googleapis.com/a1aa/image/vudA2588jCKiJh7nsKVox2N8cNpa7Mqff2M0NvZfnofyRtuPB.jpg" alt="User Avatar" class="rounded-circle me-2" height="40" width="40">
+                        {{ session('user')->nama_lengkap }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                        <li><a class="dropdown-item" href="{{ url('/profile') }}">Profile</a></li>
+                        <li><a class="dropdown-item text-danger" href="{{ url('/logout') }}">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="pt-5"></div>
+<div class="pt-5"></div>
 
     <!-- Main Content -->
     @if ($errors->any())
@@ -163,34 +157,49 @@
             </ul>
         </div>
     @endif
-
-    <form action="{{ route('videos.update', $video->id) }}" method="POST" enctype="multipart/form-data">
+  <div class="container">
+    <form action="{{ route('videos.update', $video->id) }}" method="POST" enctype="multipart/form-data" class="bg-dark text-light p-4 rounded">
         @csrf
         @method('PUT')
-
-        <label for="title">Judul Video:</label><br>
-        <input type="text" id="title" name="title" value="{{ $video->title }}" required><br><br>
-
-        <label for="description">Deskripsi Video:</label><br>
-        <textarea id="description" name="description" required>{{ $video->description }}</textarea><br><br>
-
-        <label for="category">Kategori:</label><br>
-        <select id="category" name="category" required>
-            @foreach ($categories as $cat)
-                <option value="{{ $cat }}" {{ $video->category === $cat ? 'selected' : '' }}>
-                    {{ $cat }}
-                </option>
-            @endforeach
-        </select><br><br>
-
-        <label for="video">Unggah Video Baru (Opsional):</label><br>
-        <input type="file" id="video" name="video" accept="video/*"><br><br>
-
-        <button type="submit">Simpan Perubahan</button>
+    
+        <!-- Judul Video -->
+        <div class="mb-3">
+            <label for="title" class="form-label">Judul Video</label>
+            <input type="text" id="title" name="title" class="form-control bg-dark text-light border-secondary" value="{{ $video->title }}" required>
+        </div>
+    
+        <!-- Deskripsi Video -->
+        <div class="mb-3">
+            <label for="description" class="form-label">Deskripsi Video</label>
+            <textarea id="description" name="description" class="form-control bg-dark text-light border-secondary" rows="4" required>{{ $video->description }}</textarea>
+        </div>
+    
+        <!-- Kategori -->
+        <div class="mb-3">
+            <label for="category" class="form-label">Kategori</label>
+            <select id="category" name="category" class="form-select bg-dark text-light border-secondary" required>
+                @foreach ($categories as $cat)
+                    <option value="{{ $cat }}" {{ $video->category === $cat ? 'selected' : '' }}>
+                        {{ $cat }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+    
+        <!-- Unggah Video -->
+        <div class="mb-3">
+            <label for="video" class="form-label">Unggah Video Baru (Opsional)</label>
+            <input type="file" id="video" name="video" class="form-control bg-dark text-light border-secondary" accept="video/*">
+        </div>
+    
+        <!-- Tombol -->
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+            <a href="{{ route('dashboard') }}" class="btn btn-secondary">Kembali</a>
+        </div>
     </form>
-
-    <a href="{{ route('dashboard') }}">Kembali ke Dashboard</a>
-
+  </div>
+    
     <!-- Footer -->
     <footer class="bg-dark text-center py-4 mt-5">
         <p class="mb-0 text-light">© 2025 Calon Dosen. Semua Hak Dilindungi.</p>
