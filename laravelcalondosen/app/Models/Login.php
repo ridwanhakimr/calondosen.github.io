@@ -17,6 +17,7 @@ class Login extends Model
         'password',
         'email',
         'nama_lengkap',
+        'role',
     ];
     public $timestamps = false;
 }

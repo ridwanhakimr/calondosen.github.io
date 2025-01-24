@@ -25,7 +25,7 @@ class QuestionController extends Controller
     public function create()
     {
         $categories = ['Matematika', 'Bahasa Indonesia', 'Bahasa Inggris', 'PPKN', 'IPA', 'IPS', 'Teknik Informatika', 'Lainnya'];
-        return view('questions.create', compact('categories'));
+        return view('questions', compact('categories'));
     }
 
     public function store(Request $request)

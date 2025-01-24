@@ -125,7 +125,7 @@ class VideoController extends Controller
         $video->category = $request->category;
         $video->save();
 
-        return redirect()->route('dashboard')->with('success', 'Video berhasil diperbarui!');
+        return redirect()->route('profile')->with('success', 'Video berhasil diperbarui!');
     }
 
 }

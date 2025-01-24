@@ -203,56 +203,6 @@
                 <!-- Kolom Form 1 -->
                 <div class="col-md-6">
                     <div class="card shadow-sm">
-                        <div class="card-body ">
-                            <h2 class="mb-3 text-left">Tambah Pertanyaan Baru</h2>
-                            <form action="{{ route('questions.store') }}" method="POST"
-                                class=" text-light p-4 rounded text-start">
-                                @csrf
-
-                                <!-- Judul Pertanyaan -->
-                                <div class="mb-3">
-                                    <label for="title" class="form-label">Judul Pertanyaan</label>
-                                    <input type="text" id="title" name="title"
-                                        class="form-control  text-light border-secondary"
-                                        placeholder="Masukkan judul pertanyaan"
-                                        style="background-color: #333333; color: #ffffff; border-color: #555555;"
-                                        required>
-                                </div>
-
-                                <!-- Isi Pertanyaan -->
-                                <div class="mb-3">
-                                    <label for="content" class="form-label">Isi Pertanyaan</label>
-                                    <textarea id="content" name="content" class="form-control  text-light border-secondary" rows="5"
-                                        placeholder="Jelaskan pertanyaan Anda" style="background-color: #333333; color: #ffffff; border-color: #555555;"
-                                        required></textarea>
-                                </div>
-
-                                <!-- Kategori -->
-                                <div class="mb-3">
-                                    <label for="category" class="form-label">Kategori</label>
-                                    <select id="category" name="category"
-                                        class="form-select  text-light border-secondary"
-                                        style="background-color: #333333; color: #ffffff; border-color: #555555;"required>
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category }}">{{ $category }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <!-- Tombol -->
-                                <div class="d-flex justify-content-between">
-                                    <button type="submit" class="btn btn-success">Tambah Pertanyaan</button>
-                                    {{-- <a href="{{ route('dashboard') }}" class="btn btn-secondary">Kembali</a> --}}
-                                </div>
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Kolom Form 2 -->
-                <div class="col-md-6">
-                    <div class="card shadow-sm">
                         <div class="card-body">
                             <h2 class="mb-3 text-left">Jawaban</h2>
                             <!-- Daftar Pertanyaan -->
@@ -319,6 +269,58 @@
 
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kolom Form 2 -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm">
+                        <div class="card-body ">
+                            <h2 class="mb-3 text-left">Tambah Pertanyaan Baru</h2>
+                            <form action="{{ route('questions.store') }}" method="POST"
+                                class=" text-light p-4 rounded text-start">
+                                @csrf
+
+                                <!-- Judul Pertanyaan -->
+                                <div class="mb-3">
+                                    <label for="title" class="form-label">Judul Pertanyaan</label>
+                                    <input type="text" id="title" name="title"
+                                        class="form-control  text-light border-secondary"
+                                        placeholder="Masukkan judul pertanyaan"
+                                        style="background-color: #333333; color: #ffffff; border-color: #555555;"
+                                        required>
+                                </div>
+
+                                <!-- Isi Pertanyaan -->
+                                <div class="mb-3">
+                                    <label for="content" class="form-label">Isi Pertanyaan</label>
+                                    <textarea id="content" name="content" class="form-control  text-light border-secondary" rows="5"
+                                        placeholder="Jelaskan pertanyaan Anda" style="background-color: #333333; color: #ffffff; border-color: #555555;"
+                                        required></textarea>
+                                </div>
+
+                                <!-- Kategori -->
+                                <div class="mb-3">
+                                    <label for="category" class="form-label">Kategori</label>
+                                    <select id="category" name="category"
+                                        class="form-select  text-light border-secondary"
+                                        style="background-color: #333333; color: #ffffff; border-color: #555555;"required>
+                                        @foreach ($categories as $category)
+                                            @if ($category !== 'Semua') <!-- Sembunyikan kategori "Semua" -->
+                                                <option value="{{ $category }}">{{ $category }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <!-- Tombol -->
+                                <div class="d-flex justify-content-between">
+                                    <button type="submit" class="btn btn-success">Tambah Pertanyaan</button>
+                                    {{-- <a href="{{ route('dashboard') }}" class="btn btn-secondary">Kembali</a> --}}
+                                </div>
+                            </form>
+
                         </div>
                     </div>
                 </div>

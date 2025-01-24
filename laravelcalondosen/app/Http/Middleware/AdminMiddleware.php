@@ -5,14 +5,16 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class AuthenticateUser
+class AdminMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        if (session('user') && session('user')->role === 'user') {
+        // Periksa apakah user login dan memiliki role admin
+        if (session('user') && session('user')->role === 'admin') {
             return $next($request);
         }
 
+        // Redirect jika bukan admin
         return redirect('/')->withErrors(['access' => 'Anda tidak memiliki akses ke halaman ini.']);
     }
 }
