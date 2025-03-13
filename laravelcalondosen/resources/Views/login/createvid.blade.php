@@ -100,6 +100,11 @@
             /* Light border */
             border-radius: 5px;
         }
+        .form-control::placeholder {
+            color: #f2f2f2;
+            opacity: 1;
+            /* Menghilangkan transparansi default pada placeholder */
+        }
     </style>
 </head>
 
@@ -196,6 +201,12 @@
                         <option value="{{ $category }}">{{ $category }}</option>
                     @endforeach
                 </select>
+            </div>
+            <div class="mb-3">
+                <label for="duration" class="form-label">Durasi Video (dalam menit)</label>
+                <input type="text" id="duration" name="duration" class="form-control text-light border-secondary"
+                    placeholder="Masukkan durasi video, misalnya: 5:30"
+                    style="background-color: #333333; color: #ffffff; border-color: #555555;" required>
             </div>
 
             <!-- Unggah Video -->

@@ -57,7 +57,7 @@ class QuestionController extends Controller
         $question = Question::findOrFail($id);
         $question->delete();
 
-        return redirect()->route('questions.index')->with('success', 'Pertanyaan berhasil dihapus!');
+        return redirect()->route('profile')->with('success', 'Pertanyaan berhasil dihapus!');
     }
 
     public function edit($id)

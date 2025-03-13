@@ -185,6 +185,12 @@
                 @endforeach
             </select>
         </div>
+        <div class="mb-3">
+            <label for="duration" class="form-select bg-dark text-light border-secondary">Durasi Video (dalam menit)</label>
+            <input type="text" id="duration" name="duration" class="form-control text-light border-secondary"
+                value="{{ $video->duration }}" placeholder="Masukkan durasi video, misalnya: 5:30"
+                style="background-color: #333333; color: #ffffff; border-color: #555555;" required>
+        </div>
     
         <!-- Unggah Video -->
         <div class="mb-3">

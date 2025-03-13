@@ -39,6 +39,7 @@ class VideoController extends Controller
             'description' => 'required',
             'category' => 'required',
             'video' => 'required|mimes:mp4,avi,mov|max:20480', // Max 20MB
+            'duration' => 'required|regex:/^\d+:\d{2}$/', // Format durasi, contoh: 5:30
         ]);
 
         // Simpan video ke storage lokal
@@ -51,6 +52,7 @@ class VideoController extends Controller
             'category' => $request->category,
             'video_path' => $path,
             'user_id' => session('user')->id_user,
+            'duration' => $request->duration, // Simpan durasi video
         ]);
 
         return redirect()->route('dashboard')->with('success', 'Video berhasil ditambahkan!');
@@ -104,6 +106,7 @@ class VideoController extends Controller
             'description' => 'required',
             'category' => 'required',
             'video' => 'nullable|mimes:mp4,avi,mov|max:20480', // Max 20MB
+            'duration' => 'required|regex:/^\d+:\d{2}$/', // Format durasi
         ]);
 
         // Ambil data video
@@ -123,6 +126,7 @@ class VideoController extends Controller
         $video->title = $request->title;
         $video->description = $request->description;
         $video->category = $request->category;
+        $video->duration = $request->duration; // Update durasi
         $video->save();
 
         return redirect()->route('profile')->with('success', 'Video berhasil diperbarui!');

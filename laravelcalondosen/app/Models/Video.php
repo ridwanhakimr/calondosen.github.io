@@ -15,6 +15,7 @@ class Video extends Model
         'category',
         'video_path',
         'user_id',
+        'duration',
     ];
 
     public function user()

@@ -138,6 +138,7 @@
                             <th scope="col">Deskripsi</th>
                             <th scope="col">Kategori</th>
                             <th scope="col">Nama Lengkap</th>
+                            <th scope="col">DURASI</th>
                             <th scope="col">Aksi</th>
                         </tr>
                     </thead>
@@ -154,6 +155,7 @@
                             <td>{{ $video->description }}</td>
                             <td>{{ $video->category }}</td>
                             <td>{{ $video->user->nama_lengkap }}</td>
+                            <td>{{ $video->duration }}</td>
                             <td>
                                 <form action="{{ route('admin.videos.destroy', $video->id) }}" method="POST" style="display:inline;">
                                     @csrf

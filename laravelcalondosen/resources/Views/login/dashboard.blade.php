@@ -162,6 +162,7 @@
                             <div class="card-body">
                                 <p class="card-text text-start"><strong>Kategori:</strong> {{ $video->category }}</p>
                                 <p class="card-text text-start"><strong>Pengirim:</strong> {{ $video->user->nama_lengkap }}</p>
+                                <p class="card-text text-start"><strong>durasi:</strong> {{ $video->duration }}</p>
                                 {{-- @if (session('user')->id_user == $video->user_id)
                                     <div class="row">
                                         <div class="col text-start">
